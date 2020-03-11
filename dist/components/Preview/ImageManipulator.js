@@ -685,8 +685,8 @@ var ImageManipulator = /*#__PURE__*/function (_Component) {
       }, function () {
         var canvas = (0, _utils.getCanvasNode)();
         var rect = canvas.getBoundingClientRect();
-        var zoom = canvas.width / rect.width;
-        var aspectRatio = config.disableCustomCrop && config.cropPresets.length > 0 ? config.cropPresets[0].value : NaN;
+        var zoom = canvas.width / rect.width; // const aspectRatio = (config.disableCustomCrop && config.cropPresets.length > 0) ? config.cropPresets[0].value : NaN;
+
         _this.cropper = new _cropperjs.default(canvas, {
           viewMode: 1,
           modal: false,
@@ -694,7 +694,7 @@ var ImageManipulator = /*#__PURE__*/function (_Component) {
           rotatable: false,
           scalable: false,
           zoomable: false,
-          aspectRatio: aspectRatio,
+          // aspectRatio,
           movable: false,
           crop: function crop(event) {
             _this.props.updateState({
@@ -705,6 +705,11 @@ var ImageManipulator = /*#__PURE__*/function (_Component) {
         window.scaleflexPlugins = window.scaleflexPlugins || {};
         window.scaleflexPlugins.zoom = zoom;
         window.scaleflexPlugins.cropperjs = _this.cropper;
+
+        if (config.disableCustomCrop && config.cropPresets.length > 0) {
+          window.scaleflexPlugins.cropperjs.setAspectRatio(config.cropPresets[0].value);
+        }
+
         updateState({
           isHideCanvas: false,
           isShowSpinner: false

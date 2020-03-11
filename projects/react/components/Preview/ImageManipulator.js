@@ -571,7 +571,7 @@ export default class ImageManipulator extends Component {
         const rect = canvas.getBoundingClientRect();
         const zoom = canvas.width / rect.width;
 
-        const aspectRatio = (config.disableCustomCrop && config.cropPresets.length > 0) ? config.cropPresets[0].value : NaN;
+        // const aspectRatio = (config.disableCustomCrop && config.cropPresets.length > 0) ? config.cropPresets[0].value : NaN;
 
         this.cropper = new Cropper(canvas, {
           viewMode: 1,
@@ -580,7 +580,7 @@ export default class ImageManipulator extends Component {
           rotatable: false,
           scalable: false,
           zoomable: false,
-          aspectRatio,
+          // aspectRatio,
           movable: false,
           crop: event => {
             this.props.updateState({ cropDetails: event.detail });
@@ -590,6 +590,10 @@ export default class ImageManipulator extends Component {
         window.scaleflexPlugins = window.scaleflexPlugins || {};
         window.scaleflexPlugins.zoom = zoom;
         window.scaleflexPlugins.cropperjs = this.cropper;
+
+        if ((config.disableCustomCrop && config.cropPresets.length > 0)) {
+          window.scaleflexPlugins.cropperjs.setAspectRatio(config.cropPresets[0].value);
+        }
 
         updateState({ isHideCanvas: false, isShowSpinner: false });
       }
