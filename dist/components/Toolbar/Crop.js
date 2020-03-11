@@ -145,7 +145,8 @@ var _default = (_temp = /*#__PURE__*/function (_Component) {
 
       if (activeRatio === 'custom' && disableCustomCrop && cropPresets.length > 0) {
         this.setState({
-          activeRatio: cropPresets[0].name
+          activeRatio: cropPresets[0].name,
+          aspectRatio: cropPresets[0].value
         });
       }
 

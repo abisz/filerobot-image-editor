@@ -66,7 +66,7 @@ export default class extends Component {
     const { cropPresets = [], disableCustomCrop } = config;
 
     if (activeRatio === 'custom' && disableCustomCrop && cropPresets.length > 0) {
-      this.setState({ activeRatio: cropPresets[0].name });
+      this.setState({ activeRatio: cropPresets[0].name, aspectRatio: cropPresets[0].value });
     }
 
     return (
