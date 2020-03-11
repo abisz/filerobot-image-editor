@@ -63,36 +63,42 @@ export default class extends Component {
   render() {
     const { aspectRatio, activeRatio } = this.state;
     const { cropDetails, original, initialZoom, t, config } = this.props;
-    const { cropPresets = [] } = config;
+    const { cropPresets = [], disableCustomCrop } = config;
+
+    if (activeRatio === 'custom' && disableCustomCrop && cropPresets.length > 0) {
+      this.setState({ activeRatio: cropPresets[0].name });
+    }
 
     return (
       <CropWrapper>
-        <CropBox active={activeRatio === 'custom'}>
-          <FieldSet>
-            <FieldLabel>{t['common.width']}</FieldLabel>
-            <FieldInput
-              dark={activeRatio === 'custom'}
-              fullSize
-              value={Math.round(cropDetails.width * initialZoom)}
-              onChange={this.changeWidth}
-            />
-          </FieldSet>
-          <BlockRatioWrapper>
-            <BlockRatioBtn active={aspectRatio} link onClick={this.toggleRatio}>
-              <BlockRatioIcon active={aspectRatio}/>
-            </BlockRatioBtn>
-          </BlockRatioWrapper>
-          <FieldSet>
-            <FieldLabel>{t['common.height']}</FieldLabel>
-            <FieldInput
-              dark={activeRatio === 'custom'}
-              fullSize
-              value={Math.round(cropDetails.height * initialZoom)}
-              onChange={this.changeHeight}
-            />
-          </FieldSet>
-          <CustomLabel>{t['common.custom']}</CustomLabel>
-        </CropBox>
+        {!disableCustomCrop && cropPresets.length > 0 &&
+          <CropBox active={activeRatio === 'custom'}>
+            <FieldSet>
+              <FieldLabel>{t['common.width']}</FieldLabel>
+              <FieldInput
+                dark={activeRatio === 'custom'}
+                fullSize
+                value={Math.round(cropDetails.width * initialZoom)}
+                onChange={this.changeWidth}
+              />
+            </FieldSet>
+            <BlockRatioWrapper>
+              <BlockRatioBtn active={aspectRatio} link onClick={this.toggleRatio}>
+                <BlockRatioIcon active={aspectRatio}/>
+              </BlockRatioBtn>
+            </BlockRatioWrapper>
+            <FieldSet>
+              <FieldLabel>{t['common.height']}</FieldLabel>
+              <FieldInput
+                dark={activeRatio === 'custom'}
+                fullSize
+                value={Math.round(cropDetails.height * initialZoom)}
+                onChange={this.changeHeight}
+              />
+            </FieldSet>
+            <CustomLabel>{t['common.custom']}</CustomLabel>
+          </CropBox>
+        }
 
         {cropPresets.map(box => (
           <CropBox

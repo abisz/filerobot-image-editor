@@ -17,6 +17,9 @@ const App = () => {
       <FilerobotImageEditor
         show={show}
         src={src}
+        config={{
+          disableCustomCrop: true,
+        }}
         onClose={() => { toggle(false) }}
         onComplete={(props) => { console.log(props) }}
         onBeforeComplete={(props) => { console.log(props); return false; }}
