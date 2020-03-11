@@ -124,7 +124,20 @@ var _default = (_temp = /*#__PURE__*/function (_Component) {
 
   _createClass(_default, [{
     key: "componentDidMount",
-    value: function componentDidMount() {}
+    value: function componentDidMount() {
+      var activeRatio = this.state.activeRatio;
+      var config = this.props.config;
+      var _config$cropPresets = config.cropPresets,
+          cropPresets = _config$cropPresets === void 0 ? [] : _config$cropPresets,
+          disableCustomCrop = config.disableCustomCrop;
+
+      if (activeRatio === 'custom' && disableCustomCrop && cropPresets.length > 0) {
+        this.setState({
+          aspectRatio: cropPresets[0].value,
+          activeRatio: cropPresets[0].name
+        });
+      }
+    }
   }, {
     key: "render",
     value: function render() {
@@ -139,17 +152,9 @@ var _default = (_temp = /*#__PURE__*/function (_Component) {
           initialZoom = _this$props.initialZoom,
           t = _this$props.t,
           config = _this$props.config;
-      var _config$cropPresets = config.cropPresets,
-          cropPresets = _config$cropPresets === void 0 ? [] : _config$cropPresets,
+      var _config$cropPresets2 = config.cropPresets,
+          cropPresets = _config$cropPresets2 === void 0 ? [] : _config$cropPresets2,
           disableCustomCrop = config.disableCustomCrop;
-
-      if (activeRatio === 'custom' && disableCustomCrop && cropPresets.length > 0) {
-        this.setState({
-          activeRatio: cropPresets[0].name,
-          aspectRatio: cropPresets[0].value
-        });
-      }
-
       return _react.default.createElement(_styledComponents.CropWrapper, null, !disableCustomCrop && cropPresets.length > 0 && _react.default.createElement(_styledComponents.CropBox, {
         active: activeRatio === 'custom'
       }, _react.default.createElement(_styledComponents.FieldSet, null, _react.default.createElement(_styledComponents.FieldLabel, null, t['common.width']), _react.default.createElement(_styledComponents.FieldInput, {

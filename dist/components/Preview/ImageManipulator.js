@@ -676,7 +676,9 @@ var ImageManipulator = /*#__PURE__*/function (_Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "onInitCrop", function () {
-      var updateState = _this.props.updateState;
+      var _this$props12 = _this.props,
+          updateState = _this$props12.updateState,
+          config = _this$props12.config;
       updateState({
         isHideCanvas: true,
         isShowSpinner: true
@@ -684,6 +686,7 @@ var ImageManipulator = /*#__PURE__*/function (_Component) {
         var canvas = (0, _utils.getCanvasNode)();
         var rect = canvas.getBoundingClientRect();
         var zoom = canvas.width / rect.width;
+        var aspectRatio = config.disableCustomCrop && config.cropPresets.length > 0 ? config.cropPresets[0].value : NaN;
         _this.cropper = new _cropperjs.default(canvas, {
           viewMode: 1,
           modal: false,
@@ -691,6 +694,7 @@ var ImageManipulator = /*#__PURE__*/function (_Component) {
           rotatable: false,
           scalable: false,
           zoomable: false,
+          aspectRatio: aspectRatio,
           movable: false,
           crop: function crop(event) {
             _this.props.updateState({
@@ -710,10 +714,10 @@ var ImageManipulator = /*#__PURE__*/function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "applyCrop", function () {
       var callback = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : function () {};
-      var _this$props12 = _this.props,
-          initialZoom = _this$props12.initialZoom,
-          updateState = _this$props12.updateState,
-          cropDetails = _this$props12.cropDetails;
+      var _this$props13 = _this.props,
+          initialZoom = _this$props13.initialZoom,
+          updateState = _this$props13.updateState,
+          cropDetails = _this$props13.cropDetails;
       var width = cropDetails.width,
           height = cropDetails.height,
           x = cropDetails.x,
@@ -757,13 +761,13 @@ var ImageManipulator = /*#__PURE__*/function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "makeCanvasSnapshot", function (operation) {
       var callback = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
-      var _this$props13 = _this.props,
-          updateState = _this$props13.updateState,
-          initialZoom = _this$props13.initialZoom,
-          operationsZoomed = _this$props13.operationsZoomed,
-          currentOperation = _this$props13.currentOperation,
-          operationsOriginal = _this$props13.operationsOriginal,
-          operations = _this$props13.operations;
+      var _this$props14 = _this.props,
+          updateState = _this$props14.updateState,
+          initialZoom = _this$props14.initialZoom,
+          operationsZoomed = _this$props14.operationsZoomed,
+          currentOperation = _this$props14.currentOperation,
+          operationsOriginal = _this$props14.operationsOriginal,
+          operations = _this$props14.operations;
 
       if (initialZoom !== 1) {
         var lastOperationIndex = operationsZoomed.indexOf(currentOperation) + 1;
@@ -837,9 +841,9 @@ var ImageManipulator = /*#__PURE__*/function (_Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "initResize", function () {
-      var _this$props14 = _this.props,
-          initialZoom = _this$props14.initialZoom,
-          updateState = _this$props14.updateState;
+      var _this$props15 = _this.props,
+          initialZoom = _this$props15.initialZoom,
+          updateState = _this$props15.updateState;
       var canvas = (0, _utils.getCanvasNode)(initialZoom !== 1 ? 'scaleflex-image-edit-box-original' : 'scaleflex-image-edit-box');
       var nextCanvasDimensions = {
         width: canvas.width,
@@ -852,13 +856,13 @@ var ImageManipulator = /*#__PURE__*/function (_Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "applyResize", function () {
-      var _this$props15 = _this.props,
-          initialZoom = _this$props15.initialZoom,
-          canvasDimensions = _this$props15.canvasDimensions,
-          updateState = _this$props15.updateState,
-          handleSave = _this$props15.handleSave,
-          operations = _this$props15.operations,
-          operationsOriginal = _this$props15.operationsOriginal;
+      var _this$props16 = _this.props,
+          initialZoom = _this$props16.initialZoom,
+          canvasDimensions = _this$props16.canvasDimensions,
+          updateState = _this$props16.updateState,
+          handleSave = _this$props16.handleSave,
+          operations = _this$props16.operations,
+          operationsOriginal = _this$props16.operationsOriginal;
       updateState({
         isHideCanvas: true,
         isShowSpinner: true,
@@ -900,9 +904,9 @@ var ImageManipulator = /*#__PURE__*/function (_Component) {
     _defineProperty(_assertThisInitialized(_this), "onAdjust", function (handler, value) {
       var _objectSpread2;
 
-      var _this$props16 = _this.props,
-          updateState = _this$props16.updateState,
-          adjust = _this$props16.adjust;
+      var _this$props17 = _this.props,
+          updateState = _this$props17.updateState,
+          adjust = _this$props17.adjust;
       updateState({
         adjust: _objectSpread({}, adjust, (_objectSpread2 = {}, _defineProperty(_objectSpread2, handler, value), _defineProperty(_objectSpread2, "isHideCanvas", true), _defineProperty(_objectSpread2, "isShowSpinner", true), _objectSpread2))
       }, function () {
@@ -925,14 +929,14 @@ var ImageManipulator = /*#__PURE__*/function (_Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "applyOperations", function (operationIndex, callback) {
-      var _this$props17 = _this.props,
-          initialZoom = _this$props17.initialZoom,
-          operations = _this$props17.operations,
-          operationsZoomed = _this$props17.operationsZoomed,
-          operationsOriginal = _this$props17.operationsOriginal,
-          canvasZoomed = _this$props17.canvasZoomed,
-          canvasOriginal = _this$props17.canvasOriginal,
-          updateState = _this$props17.updateState;
+      var _this$props18 = _this.props,
+          initialZoom = _this$props18.initialZoom,
+          operations = _this$props18.operations,
+          operationsZoomed = _this$props18.operationsZoomed,
+          operationsOriginal = _this$props18.operationsOriginal,
+          canvasZoomed = _this$props18.canvasZoomed,
+          canvasOriginal = _this$props18.canvasOriginal,
+          updateState = _this$props18.updateState;
 
       if (initialZoom !== 1) {
         var nextOperation = operationIndex !== -1 ? operationsZoomed[operationIndex] : {
@@ -999,11 +1003,11 @@ var ImageManipulator = /*#__PURE__*/function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "applyCorrections", function () {
       var callback = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : function () {};
-      var _this$props18 = _this.props,
-          initialZoom = _this$props18.initialZoom,
-          effect = _this$props18.effect,
-          filter = _this$props18.filter,
-          adjust = _this$props18.adjust;
+      var _this$props19 = _this.props,
+          initialZoom = _this$props19.initialZoom,
+          effect = _this$props19.effect,
+          filter = _this$props19.filter,
+          adjust = _this$props19.adjust;
       var brightness = adjust.brightness,
           contrast = adjust.contrast,
           saturation = adjust.saturation,
@@ -1066,9 +1070,9 @@ var ImageManipulator = /*#__PURE__*/function (_Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "initWatermark", function () {
-      var _this$props19 = _this.props,
-          watermark = _this$props19.watermark,
-          updateState = _this$props19.updateState;
+      var _this$props20 = _this.props,
+          watermark = _this$props20.watermark,
+          updateState = _this$props20.updateState;
 
       _this.setState({
         tempWatermark: watermark && (0, _utils.deepCopy)(watermark)
@@ -1301,11 +1305,11 @@ var ImageManipulator = /*#__PURE__*/function (_Component) {
       var _this2 = this;
 
       var that = this;
-      var _this$props20 = this.props,
-          updateState = _this$props20.updateState,
-          img = _this$props20.img,
-          isPreResize = _this$props20.isPreResize,
-          preCanvasDimensions = _this$props20.preCanvasDimensions;
+      var _this$props21 = this.props,
+          updateState = _this$props21.updateState,
+          img = _this$props21.img,
+          isPreResize = _this$props21.isPreResize,
+          preCanvasDimensions = _this$props21.preCanvasDimensions;
       updateState({
         isShowSpinner: true,
         applyChanges: this.applyChanges,

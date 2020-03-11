@@ -12,7 +12,15 @@ export default class extends Component {
     activeRatio: 'custom'
   }
 
-  componentDidMount() { }
+  componentDidMount() {
+    const { activeRatio } = this.state;
+    const { config } = this.props;
+    const { cropPresets = [], disableCustomCrop } = config;
+
+    if (activeRatio === 'custom' && disableCustomCrop && cropPresets.length > 0) {
+      this.setState({ aspectRatio: cropPresets[0].value, activeRatio: cropPresets[0].name});
+    }
+  }
 
   changeWidth = (event) => {
     const { initialZoom } = this.props;
@@ -64,10 +72,6 @@ export default class extends Component {
     const { aspectRatio, activeRatio } = this.state;
     const { cropDetails, original, initialZoom, t, config } = this.props;
     const { cropPresets = [], disableCustomCrop } = config;
-
-    if (activeRatio === 'custom' && disableCustomCrop && cropPresets.length > 0) {
-      this.setState({ activeRatio: cropPresets[0].name, aspectRatio: cropPresets[0].value });
-    }
 
     return (
       <CropWrapper>

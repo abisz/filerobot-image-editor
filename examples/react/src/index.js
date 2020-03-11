@@ -19,6 +19,10 @@ const App = () => {
         src={src}
         config={{
           disableCustomCrop: true,
+          cropPresets: [{
+            name: '16:9',
+            value: 1.7777,
+          }],
         }}
         onClose={() => { toggle(false) }}
         onComplete={(props) => { console.log(props) }}

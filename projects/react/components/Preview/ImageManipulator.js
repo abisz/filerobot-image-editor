@@ -562,7 +562,7 @@ export default class ImageManipulator extends Component {
   }
 
   onInitCrop = () => {
-    const { updateState } = this.props;
+    const { updateState, config } = this.props;
 
     updateState(
       { isHideCanvas: true, isShowSpinner: true },
@@ -571,6 +571,8 @@ export default class ImageManipulator extends Component {
         const rect = canvas.getBoundingClientRect();
         const zoom = canvas.width / rect.width;
 
+        const aspectRatio = (config.disableCustomCrop && config.cropPresets.length > 0) ? config.cropPresets[0].value : NaN;
+
         this.cropper = new Cropper(canvas, {
           viewMode: 1,
           modal: false,
@@ -578,6 +580,7 @@ export default class ImageManipulator extends Component {
           rotatable: false,
           scalable: false,
           zoomable: false,
+          aspectRatio,
           movable: false,
           crop: event => {
             this.props.updateState({ cropDetails: event.detail });
